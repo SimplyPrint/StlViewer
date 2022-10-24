@@ -1,4 +1,7 @@
 # Viewstl
+
+## This version has been partially modified to support full minification for optimal content delivery.
+
 Javascript STL/OBJ 3D files Viewer
 
 Reads binary/ASCII STL files; OBJ files

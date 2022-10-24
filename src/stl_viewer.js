@@ -214,8 +214,7 @@ function StlViewer(parent_element_obj, options)
 
 	this.load_from_stl_file = function (model)
 	{
-		var model_worker=new Worker(((typeof _this.load_three_files == "string")?_this.load_three_files:"")+"load_stl.min.js");
-		//var model_worker=new Worker(((typeof _this.load_three_files == "string")?_this.load_three_files:"")+"load_stl.js");
+        var model_worker = new Worker(window.URL.createObjectURL(worker_blob));
 		model_worker.onmessage = function(e)
 		{
 			//console.log("msg from worker: ");
@@ -2131,6 +2130,7 @@ function StlViewer(parent_element_obj, options)
 
 	this.load_three=function(path)
 	{
+        /*
 		if (typeof _this.load_three_files != "string") _this.load_three_files="";
 		_this.scripts_loader=new ScriptsLoader();
 		var scripts_to_load=[path+"three.min.js", path+"webgl_detector.js", path+"Projector.js", path+"CanvasRenderer.js", path+(_this.controls_type==0?"OrbitControls.js":"TrackballControls.js")];
@@ -2139,6 +2139,7 @@ function StlViewer(parent_element_obj, options)
 		if (_this.jszip_utils_path) scripts_to_load.push(_this.jszip_utils_path); //need it to handle vsb format
 
 		_this.scripts_loader.load_scripts(scripts_to_load, _this.external_files_loaded);
+        */
 	}
 	
 	this.init_by_json = function(json_str)

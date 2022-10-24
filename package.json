@@ -1,0 +1,24 @@
+{
+  "name": "viewstl-min",
+  "version": "0.0.1",
+  "description": "Javascript STL/OBJ 3D files Viewer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SimplyPrint/viewstl.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SimplyPrint/viewstl/issues"
+  },
+  "homepage": "https://github.com/SimplyPrint/viewstl#readme",
+  "devDependencies": {
+    "grunt": "^1.5.3",
+    "grunt-contrib-uglify": "^5.2.2",
+    "grunt-contrib-watch": "^1.1.0"
+  }
+}
