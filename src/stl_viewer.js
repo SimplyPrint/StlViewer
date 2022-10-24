@@ -39,7 +39,7 @@
 //New in 1.08 => Returns x/y/z dimentions of a model on 'get_model_info'
 //New in 1.08 => Fixed finding file extention, thanks Rafael!
 //**********************************************************
-function StlViewer(parent_element_obj, options)
+global.StlViewer = function (parent_element_obj, options)
 {
 	if (!parent_element_obj) console.log ('error: no parent element');
 
@@ -210,6 +210,8 @@ function StlViewer(parent_element_obj, options)
 
 	this.load_from_stl_file = function (model)
 	{
+        var worker_blob = require("./load_stl.js");
+        console.log(worker_blob)
         var model_worker = new Worker(window.URL.createObjectURL(worker_blob));
 		model_worker.onmessage = function(e)
 		{

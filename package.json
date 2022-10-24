@@ -2,9 +2,9 @@
   "name": "viewstl-min",
   "version": "0.0.1",
   "description": "Javascript STL/OBJ 3D files Viewer",
-  "main": "index.js",
+  "main": "build/stl_viewer.min.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm install && grunt"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,10 @@
   "homepage": "https://github.com/SimplyPrint/viewstl#readme",
   "devDependencies": {
     "grunt": "^1.5.3",
+    "grunt-babel": "^8.0.0",
+    "grunt-browserify": "^6.0.0",
     "grunt-contrib-uglify": "^5.2.2",
-    "grunt-contrib-watch": "^1.1.0"
+    "grunt-contrib-watch": "^1.1.0",
+    "load-grunt-tasks": "^5.1.0"
   }
 }

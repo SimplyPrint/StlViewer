@@ -18,29 +18,37 @@ module.exports = grunt => {
             options: {
                 compress: true,
                 mangle: {
-                    reserved: ["StlViewer", "THREE"]
+                    reserved: ["StlViewer", "THREE", "module", "global", "require"]
                 },
                 comments: false,
             },
             files: {
-                'src': [
-                    'dependencies/ie_polyfill.js',
-                    'dependencies/three.min.js',
-                    'dependencies/OrbitControls.js',
-                    'dependencies/CanvasRenderer.js',
-                    'dependencies/TrackballControls.js',
-                    'dependencies/Projector.js',
-                    'dependencies/webgl_detector.js',
-                    'src/load_stl.js',
-                    'src/stl_viewer.js'
+                src : [
+                    'dependencies/*.js',
+                    'dependencies/plugins/*.js',
+                    'dist/stl_viewer.js'
                 ],
-                dest: 'build/stl_viewer.min.js',
-                cwd: '.',
+                dest: 'dist/stl_viewer.min.js',
+                cwd: '.'
+            }
+        },
+        browserify: {
+            dist: {
+                files: {
+                    'dist/stl_viewer.js': [
+                        'src/*.js'
+                    ]
+                }
             }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.registerTask('default', ['uglify']);
+    grunt.loadNpmTasks('grunt-browserify');
+
+    grunt.registerTask('default', [
+        'browserify',
+        'uglify',
+    ]);
 }
