@@ -1,4 +1,3 @@
-// const { parse_3d_file } = require('./parser');
 import { parse_3d_file } from './parser';
 
 //1.13

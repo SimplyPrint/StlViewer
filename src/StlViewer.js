@@ -1,7 +1,14 @@
-// const THREE = require("./libraries/three");
-// const WebGLDetector = require("./libraries/webgl_detector");
-import THREE from "./libraries/three";
-import WebGLDetector from "./libraries/webgl_detector";
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls';
+import { Projector } from 'three/examples/jsm/renderers/Projector';
+import { Face3, Geometry } from 'three/examples/jsm/deprecated/Geometry';
+// Polyfills
+THREE.OrbitControls = OrbitControls;
+THREE.TrackballControls = TrackballControls;
+THREE.Projector = Projector;
+THREE.Face3 = Face3;
+THREE.Geometry = Geometry;
 
 class StlViewer {
     constructor(parentElm, options) {
@@ -74,7 +81,6 @@ class StlViewer {
         this.raycaster = null; //used for onmousedown events
         this.mouse = null; //used for onmousedown events
         this.scene = null;
-        this.is_webgl = null;
         this.renderer = null;
         this.camera = null;
         this.ambientLight = null;
@@ -99,8 +105,7 @@ class StlViewer {
 
             //this.material=new THREE.MeshLambertMaterial({color:0x909090, overdraw: 1, wireframe: false, shading:THREE.FlatShading, vertexColors: THREE.FaceColors});
             this.scene = new THREE.Scene();
-            this.is_webgl = WebGLDetector.webgl;
-            this.renderer = this.is_webgl ? new THREE.WebGLRenderer({ preserveDrawingBuffer: true, alpha: true }) : new THREE.CanvasRenderer({ alpha: true });
+            this.renderer = new THREE.WebGLRenderer({ preserveDrawingBuffer: true, alpha: true });
             this.camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100000);
             this.parent_element.appendChild(this.renderer.domElement);
             this.scene.add(this.camera);
@@ -230,7 +235,7 @@ class StlViewer {
     }
 
     load_from_stl_file(model) {
-        let model_worker = new Worker("./worker/index.js");
+        let model_worker = new Worker(new URL('./worker/index.js', import.meta.url), {type: 'module'});
         let self = this;
 
         model_worker.onmessage = function (e) {
