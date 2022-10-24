@@ -6,17 +6,20 @@ module.exports = grunt => {
                 files: [ 'Gruntfile.js', 'config/*.js' ],
                 options: {
                   reload: true
-                }
+                },
+                tasks: ["default"]
             },
             scripts: {
                 files: ['src/*.js'],
-                tasks: ['uglify']
+                tasks: ['default']
             }
         },
         uglify: {
             options: {
                 compress: true,
-                mangle: true,
+                mangle: {
+                    reserved: ["StlViewer", "THREE"]
+                },
                 comments: false,
             },
             files: {

@@ -39,8 +39,6 @@
 //New in 1.08 => Returns x/y/z dimentions of a model on 'get_model_info'
 //New in 1.08 => Fixed finding file extention, thanks Rafael!
 //**********************************************************
-var stl_viewer_script_path="";
-
 function StlViewer(parent_element_obj, options)
 {
 	if (!parent_element_obj) console.log ('error: no parent element');
@@ -88,8 +86,6 @@ function StlViewer(parent_element_obj, options)
 	this.camera_state=null;
 	this.auto_rotate=false;
 	this.mouse_zoom=true;
-	//this.load_three_files=_this.get_opt("load_three_files","");
-	this.load_three_files=_this.get_opt("load_three_files", stl_viewer_script_path);
 	this.ready=(typeof THREE != 'undefined');
 	this.ready_callback=null;
 	this.jszip_path=null;
@@ -2130,16 +2126,7 @@ function StlViewer(parent_element_obj, options)
 
 	this.load_three=function(path)
 	{
-        /*
-		if (typeof _this.load_three_files != "string") _this.load_three_files="";
-		_this.scripts_loader=new ScriptsLoader();
-		var scripts_to_load=[path+"three.min.js", path+"webgl_detector.js", path+"Projector.js", path+"CanvasRenderer.js", path+(_this.controls_type==0?"OrbitControls.js":"TrackballControls.js")];
-
-		if (_this.jszip_path) scripts_to_load.push(_this.jszip_path); //need it to handle vsb and 3mf formats
-		if (_this.jszip_utils_path) scripts_to_load.push(_this.jszip_utils_path); //need it to handle vsb format
-
-		_this.scripts_loader.load_scripts(scripts_to_load, _this.external_files_loaded);
-        */
+        
 	}
 	
 	this.init_by_json = function(json_str)
@@ -2212,7 +2199,6 @@ function StlViewer(parent_element_obj, options)
 		_this.controls = null;
 	}
 
-
 	//constructor
 	_this.set_options();
 	
@@ -2223,114 +2209,4 @@ function StlViewer(parent_element_obj, options)
 		if (_this.ready_callback)
 			_this.ready_callback();
 	}
-	else
-	{
-		if (!(_this.load_three_files===false))
-		{
-			//we'll load THREE files by ourselves
-			_this.load_three(_this.load_three_files);
-		}
-		else
-			_this.model_error("No THREE files were loaded");
-	}
-
 }
-
-
-
-function ScriptsLoader()
-{
-	var _this=this;
-	this.all_loaded_callback=null;
-	
-	this.scripts_to_load=new Array(); //files in before loading, key=just an index (number)
-	this.loading_scripts=new Array(); //loading in progress, key=script name
-	this.loaded_scripts=new Array(); //done loading, key=script name
-
-	//returns wheter all scripts in array are loaded
-	this.scripts_are_loaded=function(scripts_arr)
-	{
-		var keys=Object.keys(scripts_arr);
-		
-		i=keys.length;
-		
-		while (i--)
-		{
-			if (!_this.loaded_scripts[_this.get_full_name(scripts_arr[i])])
-				return false;
-		}
-		
-		return true;
-	}
-
-	//get url with domain and such
-	this.get_short_name=function (s)
-	{
-		if (!s) return '';
-		return s.substring(s.lastIndexOf("/") + 1);
-	}
-
-	this.load_scripts = function (scripts_arr, all_loaded_callback)
-	{
-		if (all_loaded_callback) _this.all_loaded_callback=all_loaded_callback;
-		Object.keys(scripts_arr).forEach(function(key)
-		{
-			//var curr_script_name=_this.get_full_name(scripts_arr[key]);
-			var curr_script_name=_this.get_short_name(scripts_arr[key]);
-			if (_this.scripts_to_load.indexOf(curr_script_name)==-1)
-				if (!_this.loading_scripts[curr_script_name])
-					if (!_this.loaded_scripts[curr_script_name])
-						_this.scripts_to_load.push(scripts_arr[key]);
-		});
-		_this.load_files();
-	}
-
-	this.load_files = function()
-	{
-		if (_this.scripts_to_load.length==0)
-		{
-			if (_this.all_loaded_callback) _this.all_loaded_callback();
-			return;
-		}
-		
-		while (_this.scripts_to_load.length)
-		{
-			var script_name=_this.scripts_to_load.shift();
-			if (!_this.loading_scripts[script_name])
-			{
-				_this.loading_scripts[script_name]=1;
-					
-				var script = document.createElement('script');
-				script.onload = function ()
-				{
-					//console.log(_this.scripts_to_load);
-					var curr_script_name=_this.get_short_name(script.src);
-					//console.log(script.src+" - > "+curr_script_name);
-					_this.loaded_scripts[curr_script_name]=1;
-					_this.loading_scripts[curr_script_name]=0;
-					
-					_this.load_files(); //load next file, if any
-				};
-				script.src=script_name;
-				document.head.appendChild(script); 
-				return;
-			}
-		}
-		
-	}
-}
-
-Number.isInteger = Number.isInteger || function(value)
-{
-	return typeof value === "number" && 
-		isFinite(value) && 
-		Math.floor(value) === value;
-};
-
-init = function()
-{
-	if (!!window.MSStream) return; //IE
-	var script_path=document.currentScript.attributes['src'].value;
-	var x=script_path.lastIndexOf('/');
-	stl_viewer_script_path = x > 0 ? script_path.substring(0, x+1) : "";
-}();

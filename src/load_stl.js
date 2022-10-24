@@ -554,40 +554,13 @@ var worker_fn = function () {
         
     }
 
-    //returns if JSZip lib is loaded - if so, returns an instance, otherwise tries to load the lib
-    function init_zip(skip_load_script, jszip_path)
-    {
-        var zip=null;
-        try
-        {
-            zip = new JSZip();
-        }
-        catch(err)
-        {
-            if (skip_load_script) console.log('JSZip is missing', err.message);
-            zip=null;
-        }	
-
-        if (!zip)
-        {
-            if (!skip_load_script)
-            {
-                importScripts(jszip_path);
-                return 	init_zip(true, jszip_path); //tries again
-            }
-        }
-
-
-        return zip;
-    }
-
     function parse_3mf(s, callback, jszip_path)
     {
         var file_txt=arrayBufferToString(s.slice(0,5));
         if (file_txt=='<?xml')
             return parse_3mf_from_txt(arrayBufferToString(s), callback);
 
-        var zip=init_zip(false, jszip_path);
+        var zip=false;
         if (!zip) return false;
 
         var found=false;
