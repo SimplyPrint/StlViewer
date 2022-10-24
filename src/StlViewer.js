@@ -1280,74 +1280,7 @@ class StlViewer {
     json_without_nulls(arr) {
         return JSON.stringify(arr).split(",null").join("").split("null,").join("");
     }
-
-    /*
-    get_vsb_blob() {
-        //makes vsb and returns it as a blob
-        let zip = null;
-        try {
-            zip = new JSZip();
-        }
-        catch (err) {
-            console.log('download_vsb - JSZip is missing ', err.message);
-            return false;
-        }
-
-        let vsb = this.get_vsb();
-        let self = this;
-
-        zip.file("json_data.vsj", this.json_without_nulls(vsb.vsj));
-        Object.keys(vsb.files).forEach(function (key) {
-            //console.log("KEY: ",key,vsb.files[key],this.models_ref,this.models_ref[vsb.files[key].id],vsb.vsj.models);
-            let curr_filename = self.get_model_filename(vsb.vsj.models[self.models_ref[vsb.files[key].id]], true, true);
-            zip.file(curr_filename, vsb.files[key].bin);
-        });
-
-        return zip.generateAsync({ type: "blob" });
-    }
-
-    download_vsb(filename) {
-        this.get_vsb_blob(filename).then(function (content) {
-            let blob = new Blob([content], { type: "application/zip" });
-
-            let link = document.createElement("a");
-            link.href = window.URL.createObjectURL(blob);
-            let download_name = filename ? filename : "1";
-            let p = download_name.toLowerCase().indexOf('.vsb');
-            if (p >= 0) download_name = download_name.substring(0, p);
-            if (download_name.length < 1) download_name = '1';
-
-            if (window.navigator.msSaveOrOpenBlob) {
-                //only for IE
-                window.navigator.msSaveBlob(blob, download_name + '.vsb');
-                return;
-            }
-
-            link.download = download_name + '.vsb';
-            link.click();
-            URL.revokeObjectURL(link.href);
-        });
-    }
-
-    load_vsb(filename) {
-        this.pre_loaded_ab_files = [];
-        this.pre_loaded_vsj = null;
-
-        if (filename instanceof File) {
-            //return this.read_bin_file(filename, this.load_vsb_from_blob, this.loading_progress_callback);
-            return this.read_bin_file(filename, this.load_vsb_from_blob);  //read file - as arraybuffer, then pass it to load_vsb_from_blob
-        }
-
-        JSZipUtils.getBinaryContent(decodeURIComponent(filename), function (err, data) {
-            if (err) {
-                return this.model_error("load_vsb " + err, this.load_error_callback);
-            }
-
-            this.load_vsb_from_blob(data);
-        });
-    }
-    */
-
+    
     read_bin_file(f, after_read_func, prog_func, as_text) {
         let reader = new FileReader();
 
@@ -1372,36 +1305,6 @@ class StlViewer {
         else
             reader.readAsArrayBuffer(f);
     }
-
-    /*
-    load_vsb_from_blob(blob) {
-        let zip = null;
-        try {
-            zip = new JSZip();
-        }
-        catch (err) {
-            console.log('load vsb - JSZip is missing ', err.message);
-            return false;
-        }
-
-        zip.loadAsync(blob).then(function () {
-            this.zip_load_count = Object.keys(zip.files).length;
-            zip.forEach(function (relativePath, zipEntry) {
-                if (zipEntry.name == "json_data.vsj") {
-                    zip.files[zipEntry.name].async('string').then(function (fileData) {
-                        this.pre_loaded_vsj = fileData;
-                        this.zip_load_count--; if (this.zip_load_count == 0) this.load_vsj(null);
-                    });
-                }
-                else {
-                    zip.files[zipEntry.name].async('blob').then(function (fileData) {
-                        this.pre_loaded_ab_files[zipEntry.name] = fileData;
-                        this.zip_load_count--; if (this.zip_load_count == 0) this.load_vsj(null);
-                    });
-                }
-            });
-        });
-    }*/
 
     download_model(model_id, filename) {
         if (this.models_ref[model_id] === undefined) return this.model_error("download_model - id not found: " + model_id);

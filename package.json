@@ -1,23 +1,31 @@
 {
-  "name": "viewstl-min",
+  "name": "stlviewer",
   "version": "0.0.1",
   "description": "Javascript STL/OBJ 3D files Viewer",
   "main": "dist/StlViewer.js",
   "scripts": {
     "clean": "rm -rf dist/",
-    "watch": "parcel watch src/index.html --out-dir dist --public-url ./dist",
-    "build": "npm run clean && parcel build ./src/StlViewer.js --public-url /dist"
+    "watch": "parcel watch src/index.html --out-dir dist --public-url .",
+    "build": "npm run clean && parcel build ./src/StlViewer.js --public-url . --no-source-maps"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SimplyPrint/viewstl.git"
+    "url": "git+https://github.com/SimplyPrint/StlViewer.git"
   },
-  "author": "",
+  "author": {    
+    "name" : "SimplyPrint",
+    "email" : "contact@simplyprint.io",
+    "url" : "https://simplyprint.io"
+  },
+  "contributors": [
+    "omrips",
+    "simplyprint"
+  ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/SimplyPrint/viewstl/issues"
+    "url": "https://github.com/SimplyPrint/StlViewer/issues"
   },
-  "homepage": "https://github.com/SimplyPrint/viewstl#readme",
+  "homepage": "https://github.com/SimplyPrint/StlViewer#readme",
   "devDependencies": {
     "@babel/core": "^7.19.6",
     "@babel/preset-env": "^7.19.4",
