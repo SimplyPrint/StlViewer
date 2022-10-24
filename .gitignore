@@ -1,3 +1,5 @@
 node_modules
 test/*.stl
 dist/
+.parcel-cache
+.cache
