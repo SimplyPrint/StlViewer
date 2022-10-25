@@ -2,13 +2,10 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls';
 import { Projector } from 'three/examples/jsm/renderers/Projector';
-import { Face3, Geometry } from 'three/examples/jsm/deprecated/Geometry';
 // Polyfills
 THREE.OrbitControls = OrbitControls;
 THREE.TrackballControls = TrackballControls;
 THREE.Projector = Projector;
-THREE.Face3 = Face3;
-THREE.Geometry = Geometry;
 
 class StlViewer {
     constructor(parentElm, options) {
@@ -1012,7 +1009,7 @@ class StlViewer {
         let totalArea = 0;
         let a, b, c, s;
 
-        for (i = 0; i < len; i++) {
+        for (let i = 0; i < len; i++) {
             x1 = geo.vertices[geo.faces[i].a].x * factor;
             y1 = geo.vertices[geo.faces[i].a].y * factor;
             z1 = geo.vertices[geo.faces[i].a].z * factor;
@@ -1631,16 +1628,16 @@ class StlViewer {
 
         let len = vertices.length;
 
-        for (i = 0; i < len; i++) geo_vertices.push(new THREE.Vector3(vertices[i][0], vertices[i][1], vertices[i][2]));
+        for (let i = 0; i < len; i++) geo_vertices.push(new THREE.Vector3(vertices[i][0], vertices[i][1], vertices[i][2]));
 
         len = faces.length;
 
         if (!colors) {
-            for (i = 0; i < len; i++)
+            for (let i = 0; i < len; i++)
                 geo_faces.push(new THREE.Face3(faces[i][0], faces[i][1], faces[i][2]));
         }
         else {
-            for (i = 0; i < len; i++) {
+            for (let i = 0; i < len; i++) {
                 let face = new THREE.Face3(faces[i][0], faces[i][1], faces[i][2]);
                 if (typeof faces[i][3] === "undefined") {
                     if (!default_face_color) default_face_color = this.default_face_color; //if user didn't define model color, it will take the default value. since model is colored (if we're here) - we have to give each face a color, or it will appear black

@@ -5,27 +5,29 @@
   "source": "src/StlViewer.js",
   "targets": {
     "default": {
-        "publicUrl": ".",
-        "includeNodeModules": ["three"]
+      "publicUrl": ".",
+      "includeNodeModules": [
+        "three"
+      ]
     },
     "node": {
-        "publicUrl": ".",
-        "engines": {
-            "node": ">= 8.0.0"
-        }
+      "publicUrl": ".",
+      "engines": {
+        "node": ">= 8.0.0"
+      }
     },
     "modern": {
-        "publicUrl": ".",
-        "engines": {
-          "browsers": "Chrome 80"
-        }
-      },
-    "legacy": {
-        "publicUrl": ".",
-        "engines": {
-          "browsers": "> 0.5%, last 2 versions, not dead"
-        }
+      "publicUrl": ".",
+      "engines": {
+        "browsers": "Chrome 80"
       }
+    },
+    "legacy": {
+      "publicUrl": ".",
+      "engines": {
+        "browsers": "> 0.5%, last 2 versions, not dead"
+      }
+    }
   },
   "scripts": {
     "clean": "rm -rf dist/",
@@ -54,6 +56,6 @@
     "parcel": "latest"
   },
   "dependencies": {
-    "three": "^0.140.2"
+    "three": "^0.124.0"
   }
 }

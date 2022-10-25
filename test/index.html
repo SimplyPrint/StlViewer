@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="stl_cont"></div>
+</body>
+<footer>
+    <script src="/dist/modern/StlViewer.js"></script>
+    <script>
+        var stl_viewer = new StlViewer(document.getElementById("stl_cont"), {
+            width: 500,
+            height: 500,
+            models: [
+                {
+                    id: 0,
+                    filename: "/test/Architected_Skull_FCC (2).stl",
+
+                }],
+            camera: {
+                position: {
+                    x: 0,
+                    y: 0,
+                    z: 0
+                }
+            }
+        });
+    </script>
+</footer>
+
+</html>
