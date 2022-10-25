@@ -75,14 +75,12 @@ function send_error(s) {
 }
 
 function download_from_local(filename) {
-    //if ((fetch)&&(async_supported()))
-    //{
-    //	download_from_local_fetch(filename);
-    //}
-    //else
-    //{
-    download_from_local_xhr(filename);
-    //}
+    if ((fetch)) {
+        download_from_local_fetch(filename);
+    }
+    else {
+        download_from_local_xhr(filename);
+    }
 }
 
 function download_from_local_xhr(filename) {
@@ -113,29 +111,24 @@ function download_from_local_xhr(filename) {
     xhr.send(null);
 }
 
-/*
-async function download_from_local_fetch(filename)
-{
+async function download_from_local_fetch(filename) {
     const response = await fetch(filename);
     const reader = response.body.getReader();
     const total = Number(response.headers.get('content-length'));
     const chunksAll = new Uint8Array(total);
     let position = 0
-    while (true)
-    {
+    while (true) {
         const { done, value } = await reader.read()
         if (done) break;
         if (!value) continue;
         chunksAll.set(value, position);
         position += value.length;
-        if (get_progress)
-        {
+        if (get_progress) {
             postMessage({ msg_type: MSG_LOAD_IN_PROGRESS, id: model_id, loaded: position, total: total });
         }
     }
     after_file_load(chunksAll.buffer)
 }
-*/
 
 function after_file_load(s) {
     let vf_data;
