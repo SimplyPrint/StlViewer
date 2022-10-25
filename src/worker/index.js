@@ -113,21 +113,7 @@ function download_from_local_xhr(filename) {
 
 async function download_from_local_fetch(filename) {
     const response = await fetch(filename);
-    const reader = response.body.getReader();
-    const total = Number(response.headers.get('content-length'));
-    const chunksAll = new Uint8Array(total);
-    let position = 0
-    while (true) {
-        const { done, value } = await reader.read()
-        if (done) break;
-        if (!value) continue;
-        chunksAll.set(value, position);
-        position += value.length;
-        if (get_progress) {
-            postMessage({ msg_type: MSG_LOAD_IN_PROGRESS, id: model_id, loaded: position, total: total });
-        }
-    }
-    after_file_load(chunksAll.buffer)
+    after_file_load(await response.arrayBuffer());
 }
 
 function after_file_load(s) {
