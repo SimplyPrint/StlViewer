@@ -112,7 +112,7 @@ function download_from_local_xhr(filename) {
 }
 
 async function download_from_local_fetch(filename) {
-    const response = await fetch(filename);
+    const response = await fetch(filename, {method: 'GET', credentials: 'include'});
     after_file_load(await response.arrayBuffer());
 }
 
