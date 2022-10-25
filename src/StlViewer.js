@@ -236,6 +236,10 @@ class StlViewer {
         let self = this;
 
         model_worker.onmessage = function (e) {
+            if (self.killsign) {
+                model_worker.terminate();
+                return;
+            }
             //console.log("msg from worker: ");
             //console.log(e.data);
             switch (e.data.msg_type) {
@@ -777,7 +781,7 @@ class StlViewer {
     }
 
     set_model_units(model_id, units, scale) {
-        if (this.models_ref[model_id] === undefined) return this.model_error("set_model_units - id not found: " + model_id);
+        if (!this.models_ref || this.models_ref[model_id] === undefined) return this.model_error("set_model_units - id not found: " + model_id);
 
         let model = this.models[this.models_ref[model_id]];
         if (!model) return;
@@ -1382,7 +1386,7 @@ class StlViewer {
         let self = this;
 
         requestAnimationFrame((e) => {
-            self.animate(e);
+            if(self.animate) self.animate(e);
         });
 
         if (this.renderer)
@@ -1768,7 +1772,7 @@ class StlViewer {
 
         if (!this.scene) return;
         let scene = this.scene;
-        i = scene.children.length;
+        let i = scene.children.length;
         while (i--) {
             if (scene.children[i].type === 'Mesh') {
                 scene.children[i].geometry.dispose();
@@ -1824,10 +1828,9 @@ class StlViewer {
     }
 
     dispose() {
+        this.killsign = true; //not to render anymore
         //clean object's references (and let brower's GC do it work)
         this.clean();
-
-        this.killsign = true; //not to render anymore
 
         if (this.renderer) //one last render (to clean it all)
             this.renderer.render(this.scene, this.camera);

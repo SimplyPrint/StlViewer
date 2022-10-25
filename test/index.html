@@ -31,6 +31,15 @@
                 }
             }
         });
+
+        setTimeout(() => {
+            stl_viewer.clean();
+
+            stl_viewer.add_model({
+                id: 1,
+                filename: "/test/Architected_Skull_FCC (2).stl",
+            });
+        }, 2009);
     </script>
 </footer>
 
