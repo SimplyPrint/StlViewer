@@ -1,6 +1,6 @@
 {
   "name": "@simplyprint/stlviewer",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Javascript STL/OBJ 3D files Viewer",
   "source": "src/StlViewer.js",
   "targets": {

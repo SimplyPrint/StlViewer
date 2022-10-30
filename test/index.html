@@ -29,7 +29,10 @@
                     y: 0,
                     z: 0
                 }
-            }
+            },
+            loading_progress_callback: function (progress) {
+                console.log(progress);
+            },
         });
 
         setTimeout(() => {
