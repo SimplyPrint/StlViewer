@@ -1363,12 +1363,12 @@ class StlViewer {
     }
 
 
-    do_resize() {
+    do_resize(square = false) {
         if (!this.parent_element) return;
         let r = this.parent_element.getBoundingClientRect();
         //let r=this.parent_element.children[0].getBoundingClientRect();
         let rsize_width = r.width;
-        let rsize_height = r.height;
+        let rsize_height = square ? r.width : r.height;
 
         this.camera.aspect = rsize_width / rsize_height;
         this.camera.updateProjectionMatrix();
